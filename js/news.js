@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile Navigation Toggle
+    // Mobile Navigation Toggle (from index.js)
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const mobileNav = document.querySelector('.mobile-nav');
     const mobileNavOverlay = document.querySelector('.mobile-nav-overlay');
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     mobileCloseBtn.addEventListener('click', toggleMobileMenu);
     mobileNavOverlay.addEventListener('click', toggleMobileMenu);
     
-    // Mobile Dropdown Menus
+    // Mobile Dropdown Menus (from index.js)
     const mobileDropdowns = document.querySelectorAll('.mobile-dropdown');
     
     mobileDropdowns.forEach(dropdown => {
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Sticky Header on Scroll
+    // Sticky Header on Scroll (from index.js)
     const header = document.querySelector('.main-header');
     let lastScroll = 0;
     
@@ -50,30 +50,78 @@ document.addEventListener('DOMContentLoaded', function() {
         lastScroll = currentScroll;
     });
     
-    // Smooth Scrolling for Anchor Links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
+    // Category Tab Functionality
+    const tabItems = document.querySelectorAll('.tab-item');
+    const newsSections = document.querySelectorAll('.news-section');
+    
+    tabItems.forEach(tab => {
+        tab.addEventListener('click', function(e) {
             e.preventDefault();
             
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
+            // Remove active class from all tabs
+            tabItems.forEach(item => {
+                item.classList.remove('active');
+            });
             
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
+            // Add active class to clicked tab
+            this.classList.add('active');
+            
+            const targetId = this.querySelector('a').getAttribute('href').substring(1);
+            
+            // Hide all news sections
+            newsSections.forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            if (targetId === 'all') {
+                // Show all sections
+                newsSections.forEach(section => {
+                    section.style.display = 'block';
                 });
                 
-                // Close mobile menu if open
-                if (mobileNav.classList.contains('active')) {
-                    toggleMobileMenu();
+                // Scroll to top of news content
+                document.querySelector('.main-column').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            } else {
+                // Show target section
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.style.display = 'block';
+                    
+                    // Scroll to the section
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth'
+                    });
                 }
             }
         });
     });
     
-    // Newsletter Form Submission
+    // Video Play Button Functionality
+    const videoThumbnails = document.querySelectorAll('.video-thumbnail');
+    
+    videoThumbnails.forEach(thumbnail => {
+        thumbnail.addEventListener('click', function() {
+            const videoLink = this.closest('.video-item').querySelector('h4 a').href;
+            window.location.href = videoLink;
+        });
+    });
+    
+    // Podcast Play Button Functionality
+    const podcastItems = document.querySelectorAll('.podcast-item');
+    
+    podcastItems.forEach(item => {
+        const playBtn = item.querySelector('.podcast-meta span:first-child');
+        
+        playBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const podcastLink = item.querySelector('h4 a').href;
+            window.location.href = podcastLink;
+        });
+    });
+    
+    // Newsletter Form Submission (from index.js)
     const newsletterForm = document.querySelector('.newsletter-form');
     
     if (newsletterForm) {
@@ -96,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Ad Popup Functionality
+    // Ad Popup Functionality (from index.js)
     const adPopup = document.querySelector('.ad-popup');
     const adCloseBtn = document.querySelector('.ad-close-btn');
     
@@ -112,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.classList.remove('no-scroll');
     });
     
-    // Ad Carousel Functionality
+    // Ad Carousel Functionality (from index.js)
     const adCarousel = document.querySelector('.ad-carousel-inner');
     const adItems = document.querySelectorAll('.ad-carousel-item');
     const prevBtn = document.querySelector('.ad-carousel-prev');
@@ -120,7 +168,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentAdIndex = 0;
     const adCount = adItems.length;
     
-    // Initialize carousel
     function initAdCarousel() {
         adItems.forEach((item, index) => {
             if (index === 0) {
@@ -131,19 +178,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Show next ad
     function showNextAd() {
         currentAdIndex = (currentAdIndex + 1) % adCount;
         updateAdCarousel();
     }
     
-    // Show previous ad
     function showPrevAd() {
         currentAdIndex = (currentAdIndex - 1 + adCount) % adCount;
         updateAdCarousel();
     }
     
-    // Update carousel display
     function updateAdCarousel() {
         const offset = -currentAdIndex * 100;
         adCarousel.style.transform = `translateX(${offset}%)`;
@@ -157,7 +201,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Set up event listeners
     nextBtn.addEventListener('click', showNextAd);
     prevBtn.addEventListener('click', showPrevAd);
     
@@ -174,16 +217,14 @@ document.addEventListener('DOMContentLoaded', function() {
         adInterval = setInterval(showNextAd, 10000);
     });
     
-    // Initialize carousel
     initAdCarousel();
     
-    // Email Validation Helper
+    // Helper Functions (from index.js)
     function validateEmail(email) {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
     }
     
-    // Error Display Helper
     function showError(input, message) {
         const formGroup = input.parentElement;
         const errorDisplay = formGroup.querySelector('.error-message') || document.createElement('small');
@@ -204,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
     
-    // Lazy Load Images with Intersection Observer
+    // Lazy Load Images with Intersection Observer (from index.js)
     if ('IntersectionObserver' in window) {
         const lazyImages = document.querySelectorAll('img[loading="lazy"]');
         
@@ -218,7 +259,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         }, {
-            rootMargin: '200px 0px' // Load images 200px before they come into view
+            rootMargin: '200px 0px'
         });
         
         lazyImages.forEach(img => {
@@ -228,14 +269,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Dynamic Year in Footer Copyright
+    // Dynamic Year in Footer Copyright (from index.js)
     const yearElement = document.querySelector('.copyright');
     if (yearElement) {
         const currentYear = new Date().getFullYear();
-        yearElement.textContent = yearElement.textContent.replace('2023', currentYear);
+        yearElement.textContent = yearElement.textContent.replace('2025', currentYear);
     }
     
-    // Search Functionality
+    // Search Functionality (from index.js)
     const searchBox = document.querySelector('.search-box');
     if (searchBox) {
         const searchInput = searchBox.querySelector('input');
@@ -256,15 +297,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function performSearch(query) {
         if (query.length > 2) {
-            // In a real implementation, you would send the search query to your server
-            // and display the results. This is just a simulation.
             window.location.href = `search.html?q=${encodeURIComponent(query)}`;
         } else {
             showError(searchInput, 'Please enter at least 3 characters');
         }
     }
     
-    // Viewport Height Fix for Mobile Devices
+    // Viewport Height Fix for Mobile Devices (from index.js)
     function setViewportHeight() {
         let vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -277,7 +316,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.documentElement.classList.remove('no-js');
 });
 
-// Service Worker Registration for PWA
+// Service Worker Registration for PWA (from index.js)
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js').then(registration => {
