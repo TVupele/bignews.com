@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigNews Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --primary-dark: #003d82;
+            --secondary-color: #e63946;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --dark-color: #212529;
+            --gray-dark: #495057;
+            --gray-medium: #6c757d;
+            --gray-light: #e9ecef;
+            --light-color: #f8f9fa;
+            --white: #ffffff;
+            --sidebar-width: 250px;
+            --header-height: 60px;
+            --font-primary: 'Montserrat', sans-serif;
+            --transition: all 0.3s ease;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            color: var(--dark-color);
+            background-color: #f5f7fa;
+            overflow-x: hidden;
+        }
+
+        /* Admin Layout */
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .admin-sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--dark-color);
+            color: var(--white);
+            position: fixed;
+            height: 100vh;
+            transition: var(--transition);
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0 15px;
+        }
+
+        .sidebar-brand {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-brand img {
+            height: 30px;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .sidebar-title {
+            padding: 10px 20px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--gray-medium);
+            letter-spacing: 1px;
+        }
+
+        .sidebar-item {
+            position: relative;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--gray-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .sidebar-link:hover, .sidebar-link.active {
+            color: var(--white);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-link .arrow {
+            margin-left: auto;
+            transition: var(--transition);
+        }
+
+        .sidebar-item.active .sidebar-link .arrow {
+            transform: rotate(90deg);
+        }
+
+        .sidebar-dropdown {
+            background-color: rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.3s ease;
+        }
+
+        .sidebar-item.active .sidebar-dropdown {
+            max-height: 500px;
+        }
+
+        .sidebar-dropdown-link {
+            display: block;
+            padding: 10px 20px 10px 50px;
+            color: var(--gray-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .sidebar-dropdown-link:hover, .sidebar-dropdown-link.active {
+            color: var(--white);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Main Content */
+        .admin-main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            transition: var(--transition);
+        }
+
+        /* Header */
+        .admin-header {
+            height: var(--header-height);
+            background-color: var(--white);
+            box-shadow: var(--box-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle-sidebar {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--gray-dark);
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-icon {
+            position: relative;
+            color: var(--gray-dark);
+            cursor: pointer;
+        }
+
+        .header-icon:hover {
+            color: var(--primary-color);
+        }
+
+        .header-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--danger-color);
+            color: var(--white);
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .user-name {
+            font-weight: 500;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--white);
+            min-width: 200px;
+            box-shadow: var(--box-shadow);
+            border-radius: 4px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+            z-index: 100;
+        }
+
+        .user-menu.active .user-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .user-dropdown-link {
+            display: block;
+            padding: 10px 15px;
+            color: var(--gray-dark);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .user-dropdown-link:hover {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+        }
+
+        .user-dropdown-divider {
+            height: 1px;
+            background-color: var(--gray-light);
+            margin: 5px 0;
+        }
+
+        /* Page Content */
+        .admin-content {
+            padding: 20px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .page-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--white);
+            border-radius: 6px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--gray-light);
+            background-color: var(--light-color);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            gap: 5px;
+        }
+
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 0.85rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: var(--white);
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: var(--dark-color);
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: var(--white);
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-outline-primary {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        /* Tables */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th, .table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .table th {
+            font-weight: 600;
+            background-color: var(--light-color);
+        }
+
+        .table tr:hover td {
+            background-color: rgba(0, 86, 179, 0.05);
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-primary {
+            background-color: rgba(0, 86, 179, 0.1);
+            color: var(--primary-color);
+        }
+
+        .badge-success {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--success-color);
+        }
+
+        .badge-warning {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--warning-color);
+        }
+
+        .badge-danger {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--danger-color);
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--gray-light);
+            border-radius: 4px;
+            font-family: var(--font-primary);
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2);
+        }
+
+        .form-text {
+            font-size: 0.85rem;
+            color: var(--gray-medium);
+            margin-top: 5px;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--gray-light);
+            border-radius: 4px;
+            font-family: var(--font-primary);
+            background-color: var(--white);
+            transition: var(--transition);
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2);
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .form-check-input {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Editor */
+        .editor-toolbar {
+            background-color: var(--light-color);
+            padding: 10px;
+            border: 1px solid var(--gray-light);
+            border-bottom: none;
+            border-radius: 4px 4px 0 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .editor-toolbar button {
+            background: none;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .editor-toolbar button:hover {
+            background-color: var(--gray-light);
+        }
+
+        .editor-content {
+            min-height: 300px;
+            padding: 15px;
+            border: 1px solid var(--gray-light);
+            border-radius: 0 0 4px 4px;
+            outline: none;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-success {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--success-color);
+            border: 1px solid rgba(40, 167, 69, 0.2);
+        }
+
+        .alert-danger {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--danger-color);
+            border: 1px solid rgba(220, 53, 69, 0.2);
+        }
+
+        /* Media Library */
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .media-item {
+            border: 1px solid var(--gray-light);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .media-item:hover {
+            border-color: var(--primary-color);
+        }
+
+        .media-item.selected {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2);
+        }
+
+        .media-thumbnail {
+            position: relative;
+            padding-top: 100%;
+            background-color: var(--light-color);
+        }
+
+        .media-thumbnail img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .media-info {
+            padding: 10px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .media-actions {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            display: flex;
+            gap: 5px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .media-item:hover .media-actions {
+            opacity: 1;
+        }
+
+        .media-action-btn {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: var(--white);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            gap: 5px;
+            margin-top: 20px;
+        }
+
+        .page-item {
+            list-style: none;
+        }
+
+        .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 4px;
+            background-color: var(--white);
+            color: var(--dark-color);
+            text-decoration: none;
+            border: 1px solid var(--gray-light);
+            transition: var(--transition);
+        }
+
+        .page-link:hover, .page-item.active .page-link {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+
+        .page-item.disabled .page-link {
+            background-color: var(--light-color);
+            color: var(--gray-medium);
+            cursor: not-allowed;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+            }
+
+            .admin-sidebar.active {
+                transform: translateX(0);
+            }
+
+            .admin-main {
+                margin-left: 0;
+            }
+
+            .admin-sidebar.active + .admin-main {
+                margin-left: var(--sidebar-width);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .table {
+                min-width: 600px;
+            }
+
+            .header-right {
+                gap: 10px;
+            }
+
+            .user-name {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="sidebar-brand">
+                    <img src="image/bignewslogo.png" alt="BigNews Logo">
+                    <span>BigNews</span>
+                </a>
+            </div>
+            <div class="sidebar-menu">
+                <div class="sidebar-title">Main</div>
+                <div class="sidebar-item">
+                    <a href="dashboard.html" class="sidebar-link active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                
+                <div class="sidebar-title">Content</div>
+                <div class="sidebar-item">
+                    <a href="javascript:void(0)" class="sidebar-link">
+                        <i class="fas fa-newspaper"></i>
+                        <span>Articles</span>
+                        <i class="fas fa-chevron-down arrow"></i>
+                    </a>
+                    <div class="sidebar-dropdown">
+                        <a href="articles.html" class="sidebar-dropdown-link">All Articles</a>
+                        <a href="article-new.html" class="sidebar-dropdown-link">Add New</a>
+                        <a href="categories.html" class="sidebar-dropdown-link">Categories</a>
+                        <a href="tags.html" class="sidebar-dropdown-link">Tags</a>
+                    </div>
+                </div>
+                <div class="sidebar-item">
+                    <a href="media.html" class="sidebar-link">
+                        <i class="fas fa-image"></i>
+                        <span>Media Library</span>
+                    </a>
+                </div>
+                
+                <div class="sidebar-title">User Engagement</div>
+                <div class="sidebar-item">
+                    <a href="comments.html" class="sidebar-link">
+                        <i class="fas fa-comments"></i>
+                        <span>Comments</span>
+                        <span class="badge badge-danger ml-auto">5</span>
+                    </a>
+                </div>
+                <div class="sidebar-item">
+                    <a href="newsletters.html" class="sidebar-link">
+                        <i class="fas fa-envelope"></i>
+                        <span>Newsletters</span>
+                    </a>
+                </div>
+                
+                <div class="sidebar-title">Site Management</div>
+                <div class="sidebar-item">
+                    <a href="javascript:void(0)" class="sidebar-link">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span>
+                        <i class="fas fa-chevron-down arrow"></i>
+                    </a>
+                    <div class="sidebar-dropdown">
+                        <a href="users.html" class="sidebar-dropdown-link">All Users</a>
+                        <a href="user-new.html" class="sidebar-dropdown-link">Add New</a>
+                        <a href="roles.html" class="sidebar-dropdown-link">Roles</a>
+                    </div>
+                </div>
+                <div class="sidebar-item">
+                    <a href="settings.html" class="sidebar-link">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </div>
+                <div class="sidebar-item">
+                    <a href="advertisements.html" class="sidebar-link">
+                        <i class="fas fa-ad"></i>
+                        <span>Advertisements</span>
+                    </a>
+                </div>
+                
+                <div class="sidebar-title">Analytics</div>
+                <div class="sidebar-item">
+                    <a href="analytics.html" class="sidebar-link">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Reports</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Header -->
+            <header class="admin-header">
+                <div class="header-left">
+                    <button class="toggle-sidebar" id="toggleSidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1>Articles</h1>
+                </div>
+                <div class="header-right">
+                    <div class="header-icon">
+                        <i class="fas fa-bell"></i>
+                        <span class="header-badge">3</span>
+                    </div>
+                    <div class="header-icon">
+                        <i class="fas fa-envelope"></i>
+                        <span class="header-badge">5</span>
+                    </div>
+                    <div class="user-menu" id="userMenu">
+                        <div class="user-avatar">JD</div>
+                        <div class="user-name">John Doe</div>
+                        <div class="user-dropdown">
+                            <a href="profile.html" class="user-dropdown-link">
+                                <i class="fas fa-user"></i> Profile
+                            </a>
+                            <a href="settings.html" class="user-dropdown-link">
+                                <i class="fas fa-cog"></i> Settings
+                            </a>
+                            <div class="user-dropdown-divider"></div>
+                            <a href="logout.html" class="user-dropdown-link">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="admin-content">
+                <div class="page-header">
+                    <h2 class="page-title">All Articles</h2>
+                    <div class="page-actions">
+                        <a href="article-new.html" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add New
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="card">
+                    <div class="card-body">
+                        <form class="form-inline">
+                            <div class="form-group" style="margin-right: 15px;">
+                                <select class="form-control" id="filterCategory">
+                                    <option value="">All Categories</option>
+                                    <option value="politics">Politics</option>
+                                    <option value="business">Business</option>
+                                    <option value="technology">Technology</option>
+                                    <option value="entertainment">Entertainment</option>
+                                    <option value="sports">Sports</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-right: 15px;">
+                                <select class="form-control" id="filterStatus">
+                                    <option value="">All Statuses</option>
+                                    <option value="published">Published</option>
+                                    <option value="draft">Draft</option>
+                                    <option value="pending">Pending Review</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-right: 15px;">
+                                <input type="text" class="form-control" id="searchArticles" placeholder="Search articles...">
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-filter"></i> Filter
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Articles Table -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Articles</h3>
+                        <div class="card-actions">
+                            <select class="form-control form-control-sm" id="bulkActions">
+                                <option value="">Bulk Actions</option>
+                                <option value="publish">Publish</option>
+                                <option value="draft">Move to Draft</option>
+                                <option value="trash">Move to Trash</option>
+                            </select>
+                            <button class="btn btn-sm btn-primary">Apply</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th width="40">
+                                            <input type="checkbox" id="selectAll">
+                                        </th>
+                                        <th>Title</th>
+                                        <th>Author</th>
+                                        <th>Categories</th>
+                                        <th>Tags</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="checkbox" class="article-checkbox"></td>
+                                        <td>
+                                            <a href="article-edit.html">President Announces Major Economic Reforms in Nationwide Address</a>
+                                        </td>
+                                        <td>John Doe</td>
+                                        <td>
+                                            <span class="badge badge-primary">Politics</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-primary">#Economy</span>
+                                            <span class="badge badge-primary">#Reforms</span>
+                                        </td>
+                                        <td>Jul 10, 2025</td>
+                                        <td>
+                                            <span class="badge badge-success">Published</span>
+                                        </td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <a href="article-edit.html" class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a href="story.html" target="_blank" class="btn btn-sm btn-primary">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <button class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="article-checkbox"></td>
+                                        <td>
+                                            <a href="article-edit.html">Stock Markets Reach All-Time High Following Policy Announcements</a>
+                                        </td>
+                                        <td>Jane Smith</td>
+                                        <td>
+                                            <span class="badge badge-primary">Business</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-primary">#Markets</span>
+                                            <span class="badge badge-primary">#Stocks</span>
+                                        </td>
+                                        <td>Jul 9, 2025</td>
+                                        <td>
+                                            <span class="badge badge-success">Published</span>
+                                        </td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <a href="article-edit.html" class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a href="story.html" target="_blank" class="btn btn-sm btn-primary">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <button class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="article-checkbox"></td>
+                                        <td>
+                                            <a href="article-edit.html">Tech Giant Unveils Revolutionary Smartphone With Breakthrough Features</a>
+                                        </td>
+                                        <td>Alex Johnson</td>
+                                        <td>
+                                            <span class="badge badge-primary">Technology</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-primary">#Smartphone</span>
+                                            <span class="badge badge-primary">#Innovation</span>
+                                        </td>
+                                        <td>Jul 9, 2025</td>
+                                        <td>
+                                            <span class="badge badge-success">Published</span>
+                                        </td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <a href="article-edit.html" class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a href="story.html" target="_blank" class="btn btn-sm btn-primary">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <button class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="article-checkbox"></td>
+                                        <td>
+                                            <a href="article-edit.html">National Team Advances to Finals After Dramatic Penalty Shootout</a>
+                                        </td>
+                                        <td>Michael Brown</td>
+                                        <td>
+                                            <span class="badge badge-primary">Sports</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-primary">#Football</span>
+                                            <span class="badge badge-primary">#Finals</span>
+                                        </td>
+                                        <td>Jul 8, 2025</td>
+                                        <td>
+                                            <span class="badge badge-success">Published</span>
+                                        </td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <a href="article-edit.html" class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a href="story.html" target="_blank" class="btn btn-sm btn-primary">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <button class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="article-checkbox"></td>
+                                        <td>
+                                            <a href="article-edit.html">New Study Reveals Benefits of Mediterranean Diet for Longevity</a>
+                                            <div class="form-text">Scheduled for Jul 12, 2025</div>
+                                        </td>
+                                        <td>Sarah Williams</td>
+                                        <td>
+                                            <span class="badge badge-primary">Health</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-primary">#Diet</span>
+                                            <span class="badge badge-primary">#Health</span>
+                                        </td>
+                                        <td>Jul 7, 2025</td>
+                                        <td>
+                                            <span class="badge badge-warning">Pending</span>
+                                        </td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <a href="article-edit.html" class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a href="story.html" target="_blank" class="btn btn-sm btn-primary">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <button class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="article-checkbox"></td>
+                                        <td>
+                                            <a href="article-edit.html">Breakthrough in Quantum Computing Could Revolutionize Industries</a>
+                                        </td>
+                                        <td>David Lee</td>
+                                        <td>
+                                            <span class="badge badge-primary">Technology</span>
+                                            <span class="badge badge-primary">Science</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-primary">#Quantum</span>
+                                            <span class="badge badge-primary">#Computing</span>
+                                        </td>
+                                        <td>Jul 6, 2025</td>
+                                        <td>
+                                            <span class="badge badge-danger">Draft</span>
+                                        </td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <a href="article-edit.html" class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a href="story.html" target="_blank" class="btn btn-sm btn-primary">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <button class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="pagination">
+                            <li class="page-item disabled">
+                                <a href="#" class="page-link">
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            </li>
+                            <li class="page-item active">
+                                <a href="#" class="page-link">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a href="#" class="page-link">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a href="#" class="page-link">3</a>
+                            </li>
+                            <li class="page-item">
+                                <a href="#" class="page-link">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Article Edit Modal -->
+    <div class="modal" id="articleEditModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Article</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Content from the article edit form would go here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle Sidebar
+            const toggleSidebar = document.getElementById('toggleSidebar');
+            const adminSidebar = document.getElementById('adminSidebar');
+            
+            toggleSidebar.addEventListener('click', function() {
+                adminSidebar.classList.toggle('active');
+            });
+            
+            // Toggle Dropdown Menus
+            const sidebarItems = document.querySelectorAll('.sidebar-item');
+            
+            sidebarItems.forEach(item => {
+                const link = item.querySelector('.sidebar-link');
+                
+                if (link) {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Close all other dropdowns
+                        sidebarItems.forEach(otherItem => {
+                            if (otherItem !== item) {
+                                otherItem.classList.remove('active');
+                            }
+                        });
+                        
+                        // Toggle current dropdown
+                        item.classList.toggle('active');
+                    });
+                }
+            });
+            
+            // User Dropdown
+            const userMenu = document.getElementById('userMenu');
+            
+            userMenu.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!userMenu.contains(e.target)) {
+                    userMenu.classList.remove('active');
+                }
+            });
+            
+            // Select All Checkbox
+            const selectAll = document.getElementById('selectAll');
+            const articleCheckboxes = document.querySelectorAll('.article-checkbox');
+            
+            selectAll.addEventListener('change', function() {
+                articleCheckboxes.forEach(checkbox => {
+                    checkbox.checked = selectAll.checked;
+                });
+            });
+            
+            // Initialize editor (would use a proper editor like TinyMCE or CKEditor in production)
+            const editorContent = document.querySelector('.editor-content');
+            
+            if (editorContent) {
+                editorContent.addEventListener('paste', function(e) {
+                    e.preventDefault();
+                    const text = (e.clipboardData || window.clipboardData).getData('text/plain');
+                    document.execCommand('insertText', false, text);
+                });
+            }
+            
+            // Media Library Item Selection
+            const mediaItems = document.querySelectorAll('.media-item');
+            
+            mediaItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                });
+            });
+            
+            // Responsive adjustments
+            function handleResize() {
+                if (window.innerWidth > 992) {
+                    adminSidebar.classList.remove('active');
+                }
+            }
+            
+            window.addEventListener('resize', handleResize);
+            handleResize();
+        });
+    </script>
+</body>
+</html>

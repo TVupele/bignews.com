@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Title - BigNews</title>
+    <meta name="description" content="Article description for SEO and social sharing">
+    <meta property="og:title" content="Article Title - BigNews">
+    <meta property="og:description" content="Article description for social sharing">
+    <meta property="og:image" content="image/article-image.jpg">
+    <meta property="og:url" content="https://www.bignews.com/story.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Additional styles specific to story page */
+        .article-header {
+            margin-bottom: 30px;
+        }
+        
+        .article-title {
+            font-family: var(--font-secondary);
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: var(--gray-medium);
+            font-size: 0.9rem;
+        }
+        
+        .article-meta .author {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .article-meta .separator {
+            color: var(--gray-light);
+        }
+        
+        .article-hero {
+            margin-bottom: 30px;
+        }
+        
+        .article-hero img {
+            width: 100%;
+            height: auto;
+            max-height: 600px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        
+        .article-hero figcaption {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: var(--gray-medium);
+            text-align: center;
+        }
+        
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .article-content p {
+            margin-bottom: 20px;
+        }
+        
+        .article-content h2, 
+        .article-content h3 {
+            font-family: var(--font-secondary);
+            margin: 30px 0 15px;
+        }
+        
+        .article-content h2 {
+            font-size: 1.8rem;
+        }
+        
+        .article-content h3 {
+            font-size: 1.5rem;
+        }
+        
+        .article-content blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 20px;
+            margin: 30px 0;
+            font-style: italic;
+            color: var(--gray-dark);
+        }
+        
+        .article-content img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .article-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .article-tag {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .article-tag:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .article-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding: 15px 0;
+            border-top: 1px solid var(--gray-light);
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .social-share {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .social-share a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            transition: var(--transition);
+        }
+        
+        .social-share a:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .article-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+        
+        .article-navigation a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background-color: var(--light-color);
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        
+        .article-navigation a:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .related-articles {
+            margin-bottom: 40px;
+        }
+        
+        .comments-section {
+            margin-bottom: 40px;
+        }
+        
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .comment-form {
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+        }
+        
+        .comment-form h3 {
+            margin-bottom: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--gray-light);
+            border-radius: 4px;
+            font-family: var(--font-primary);
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+        }
+        
+        .comment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .comment {
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .comment-author {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .comment-date {
+            font-size: 0.8rem;
+            color: var(--gray-medium);
+        }
+        
+        .comment-content {
+            color: var(--gray-dark);
+        }
+        
+        .admin-controls {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+        }
+        
+        .admin-controls h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .admin-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .admin-btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .edit-btn {
+            background-color: #ffc107;
+            color: #212529;
+            border: none;
+        }
+        
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+        }
+        
+        .publish-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+        }
+        
+        .admin-btn:hover {
+            opacity: 0.9;
+        }
+        
+        /* Admin modal styles */
+        .admin-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .admin-modal.active {
+            display: flex;
+        }
+        
+        .admin-modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .admin-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .admin-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .admin-form-group {
+            margin-bottom: 15px;
+        }
+        
+        .admin-form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .admin-form-group input,
+        .admin-form-group textarea,
+        .admin-form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+        
+        .admin-form-group textarea {
+            min-height: 200px;
+        }
+        
+        .admin-form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 2rem;
+            }
+            
+            .article-actions {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .article-navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .article-navigation a {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Ad Popup (same as index.html) -->
+    <div class="ad-popup">
+        <div class="ad-popup-content">
+            <button class="ad-close-btn"><i class="fas fa-times"></i></button>
+            <div class="ad-popup-body">
+                <img src="https://via.placeholder.com/600x400" alt="Advertisement" loading="lazy">
+                <div class="ad-popup-text">
+                    <h3>Special Offer!</h3>
+                    <p>Get 50% off on all our premium subscriptions. Limited time only!</p>
+                    <a href="#" class="btn btn-popup">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Ad Banner (same as index.html) -->
+    <div class="ad-banner">
+        <div class="container">
+            <div class="ad-carousel">
+                <div class="ad-carousel-inner">
+                    <div class="ad-carousel-item active">
+                        <img src="https://via.placeholder.com/1200x200" alt="Advertisement 1" loading="lazy">
+                    </div>
+                    <div class="ad-carousel-item">
+                        <img src="https://via.placeholder.com/1200x200" alt="Advertisement 2" loading="lazy">
+                    </div>
+                    <div class="ad-carousel-item">
+                        <img src="https://via.placeholder.com/1200x200" alt="Advertisement 3" loading="lazy">
+                    </div>
+                </div>
+                <div class="ad-carousel-controls">
+                    <button class="ad-carousel-prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="ad-carousel-next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Announcement Bar (same as index.html) -->
+    <div class="announcement-bar">
+        <div class="container">
+            <div class="announcement-content">
+                <span class="breaking-news">BREAKING: </span>
+                <span class="announcement-text">President to address nation tonight at 8pm - Live coverage on BigNews</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header (same as index.html) -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="image/bignewslogo.png" alt="BigNews Logo" width="180" height="60" loading="lazy">
+                    </a>
+                </div>
+                <div class="header-actions">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search news...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="auth-buttons">
+                        <a href="#" class="btn btn-login">Login</a>
+                        <a href="#" class="btn btn-subscribe">Subscribe</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Navigation (same as index.html) -->
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item dropdown">
+                        <a href="news.html" class="nav-link">News <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-menu">
+                            <a href="news.html#national">National</a>
+                            <a href="news.html#international">International</a>
+                            <a href="news.html#health">Health</a>
+                            <a href="news.html#education">Education</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="politics.html" class="nav-link">Politics <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-menu">
+                            <a href="politics.html#government">Government</a>
+                            <a href="politics.html#elections">Elections</a>
+                            <a href="politics.html#policy">Policy</a>
+                            <a href="politics.html#diplomacy">Diplomacy</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="business.html" class="nav-link">Business <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-menu">
+                            <a href="business.html#markets">Markets</a>
+                            <a href="business.html#companies">Companies</a>
+                            <a href="business.html#economy">Economy</a>
+                            <a href="business.html#personal-finance">Personal Finance</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="entertainment.html" class="nav-link">Entertainment <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-menu">
+                            <a href="entertainment.html#movies">Movies</a>
+                            <a href="entertainment.html#music">Music</a>
+                            <a href="entertainment.html#tv">TV</a>
+                            <a href="entertainment.html#celebrities">Celebrities</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="fashion-trends.html" class="nav-link">Fashion & Trends <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-menu">
+                            <a href="fashion-trends.html#fashion">Fashion</a>
+                            <a href="fashion-trends.html#lifestyle">Lifestyle</a>
+                            <a href="fashion-trends.html#beauty">Beauty</a>
+                            <a href="fashion-trends.html#culture">Culture</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="technology-services.html" class="nav-link">Technology & Services <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-menu">
+                            <a href="technology-services.html#tech">Tech</a>
+                            <a href="technology-services.html#innovation">Innovation</a>
+                            <a href="technology-services.html#gadgets">Gadgets</a>
+                            <a href="technology-services.html#startups">Startups</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="sports-gaming.html" class="nav-link">Sports & Gaming <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-menu">
+                            <a href="sports-gaming.html#sports">Sports</a>
+                            <a href="sports-gaming.html#esports">Esports</a>
+                            <a href="sports-gaming.html#gaming">Gaming</a>
+                            <a href="sports-gaming.html#fantasy">Fantasy</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a href="job-adverts.html" class="nav-link">Job Offers/Adverts</a></li>
+                    <li class="nav-item"><a href="opinions.html" class="nav-link">Opinions</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Admin Controls (visible to logged-in admins) -->
+            <div class="admin-controls" id="adminControls" style="display: none;">
+                <h3>Article Management</h3>
+                <div class="admin-buttons">
+                    <button class="admin-btn edit-btn" id="editArticleBtn"><i class="fas fa-edit"></i> Edit Article</button>
+                    <button class="admin-btn delete-btn" id="deleteArticleBtn"><i class="fas fa-trash"></i> Delete Article</button>
+                    <button class="admin-btn publish-btn" id="publishArticleBtn"><i class="fas fa-upload"></i> Publish Changes</button>
+                </div>
+            </div>
+
+            <!-- Article Content -->
+            <article class="article">
+                <header class="article-header">
+                    <div class="category-tag">Politics</div>
+                    <h1 class="article-title" id="articleTitle">President Announces Major Economic Reforms in Nationwide Address</h1>
+                    <div class="article-meta">
+                        <span class="author">By <span id="articleAuthor">John Doe</span></span>
+                        <span class="separator">|</span>
+                        <span class="date" id="articleDate">July 10, 2025</span>
+                        <span class="separator">|</span>
+                        <span class="read-time">5 min read</span>
+                        <span class="separator">|</span>
+                        <span class="views">1,245 views</span>
+                    </div>
+                </header>
+
+                <figure class="article-hero">
+                    <img src="image/pres_tinubu.jpeg" alt="President addressing nation" id="articleImage" loading="lazy">
+                    <figcaption id="articleImageCaption">President Tinubu addressing the nation on economic reforms (Photo: State House)</figcaption>
+                </figure>
+
+                <div class="article-content" id="articleContent">
+                    <p>The president unveiled sweeping economic reforms aimed at reducing inflation and boosting employment during a televised address to the nation last night. The comprehensive package includes measures to stimulate growth, protect vulnerable citizens, and attract foreign investment.</p>
+                    
+                    <p>"These reforms represent a new chapter in our nation's economic journey," the president declared to a nationwide audience. "We must take bold steps now to secure our future prosperity."</p>
+                    
+                    <h2>Key Reforms Announced</h2>
+                    
+                    <p>The economic package includes several major initiatives:</p>
+                    
+                    <ul>
+                        <li>A 20% reduction in corporate tax rates for businesses investing in job creation</li>
+                        <li>New infrastructure spending focused on transportation and digital connectivity</li>
+                        <li>Reforms to the banking sector to increase access to credit</li>
+                        <li>Targeted subsidies for essential goods to protect low-income families</li>
+                        <li>Incentives for foreign direct investment in key industries</li>
+                    </ul>
+                    
+                    <blockquote>
+                        "This is not just about short-term fixes, but about building a sustainable economic foundation for generations to come," the president emphasized during his 45-minute address.
+                    </blockquote>
+                    
+                    <h3>Market Reaction</h3>
+                    
+                    <p>Financial markets responded positively to the announcements, with the national stock index rising 3.5% in early trading. The currency also strengthened against major international benchmarks.</p>
+                    
+                    <img src="image/stockmarket.png" alt="Stock market reaction to economic reforms">
+                    
+                    <p>Analysts praised the comprehensiveness of the package but cautioned that implementation would be key. "The direction is right, but execution risks remain," noted chief economist Maria Gonzalez of First National Bank.</p>
+                    
+                    <h2>Political Response</h2>
+                    
+                    <p>Opposition leaders offered mixed reactions, with some welcoming the reforms while others criticized the timing and scope. "We've been calling for these measures for years," said opposition leader James Okon, "but why did it take so long?"</p>
+                    
+                    <p>The reforms are expected to face parliamentary scrutiny in the coming weeks, though the president's party holds a majority in both houses.</p>
+                </div>
+
+                <div class="article-tags">
+                    <a href="#" class="article-tag">#Economy</a>
+                    <a href="#" class="article-tag">#Reforms</a>
+                    <a href="#" class="article-tag">#President</a>
+                    <a href="#" class="article-tag">#Policy</a>
+                </div>
+
+                <div class="article-actions">
+                    <div class="social-share">
+                        <span>Share:</span>
+                        <a href="#" aria-label="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Share on Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Share via Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                    <button class="btn btn-subscribe" id="saveArticleBtn"><i class="far fa-bookmark"></i> Save for Later</button>
+                </div>
+
+                <div class="article-navigation">
+                    <a href="#" class="prev-article"><i class="fas fa-chevron-left"></i> Previous Article</a>
+                    <a href="#" class="next-article">Next Article <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </article>
+
+            <!-- Mid-Article Ad -->
+            <div class="ad-placement">
+                <img src="https://via.placeholder.com/1200x200" alt="Advertisement" loading="lazy" style="width: 100%; border-radius: 6px; margin: 30px 0;">
+            </div>
+
+            <!-- Related Articles -->
+            <section class="related-articles">
+                <h2 class="section-title">Related Articles</h2>
+                <div class="news-grid">
+                    <article class="news-card">
+                        <img src="image/cbn.jpeg" alt="Central Bank" loading="lazy">
+                        <div class="news-content">
+                            <div class="category-tag">Business</div>
+                            <h3><a href="story.html">Central Bank Raises Interest Rates to Combat Inflation</a></h3>
+                            <p class="excerpt">Monetary policy committee increases benchmark rate by 50 basis points, citing persistent inflationary pressures.</p>
+                            <div class="story-meta">
+                                <span class="date">July 9, 2025</span>
+                                <span class="read-time">5 min read</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="news-card">
+                        <img src="image/minister.jpeg" alt="Political figure" loading="lazy">
+                        <div class="news-content">
+                            <div class="category-tag">Politics</div>
+                            <h3><a href="story.html">Minister Resigns Amid Corruption Allegations</a></h3>
+                            <p class="excerpt">The transportation minister steps down following allegations of misconduct in major infrastructure projects.</p>
+                            <div class="story-meta">
+                                <span class="date">July 8, 2025</span>
+                                <span class="read-time">3 min read</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="news-card">
+                        <img src="image/stockmarket.png" alt="Stock market" loading="lazy">
+                        <div class="news-content">
+                            <div class="category-tag">Business</div>
+                            <h3><a href="story.html">Stock Markets Reach All-Time High Following Policy Announcements</a></h3>
+                            <p class="excerpt">Investors cheer the new economic measures as market indices surge to record levels.</p>
+                            <div class="story-meta">
+                                <span class="date">July 9, 2025</span>
+                                <span class="read-time">4 min read</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Comments Section -->
+            <section class="comments-section">
+                <div class="comments-header">
+                    <h2 class="section-title">Comments</h2>
+                    <button class="btn btn-login" id="loginToCommentBtn">Login to Comment</button>
+                </div>
+
+                <div class="comment-form" id="commentForm" style="display: none;">
+                    <h3>Leave a Comment</h3>
+                    <form id="commentSubmissionForm">
+                        <div class="form-group">
+                            <label for="commentName">Name</label>
+                            <input type="text" id="commentName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="commentEmail">Email (will not be published)</label>
+                            <input type="email" id="commentEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="commentText">Comment</label>
+                            <textarea id="commentText" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-subscribe">Post Comment</button>
+                    </form>
+                </div>
+
+                <div class="comment-list">
+                    <div class="comment">
+                        <div class="comment-header">
+                            <span class="comment-author">Michael Johnson</span>
+                            <span class="comment-date">July 10, 2025 at 9:15 AM</span>
+                        </div>
+                        <div class="comment-content">
+                            <p>Finally some bold moves from the administration! These reforms are exactly what we need to kickstart the economy. The tax incentives for job creation should help reduce unemployment significantly.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="comment">
+                        <div class="comment-header">
+                            <span class="comment-author">Sarah Williams</span>
+                            <span class="comment-date">July 10, 2025 at 10:42 AM</span>
+                        </div>
+                        <div class="comment-content">
+                            <p>I'll believe it when I see results. We've heard big promises before with little follow-through. The infrastructure spending sounds good, but where will the money come from?</p>
+                        </div>
+                    </div>
+                    
+                    <div class="comment">
+                        <div class="comment-header">
+                            <span class="comment-author">David Brown</span>
+                            <span class="comment-date">July 10, 2025 at 11:30 AM</span>
+                        </div>
+                        <div class="comment-content">
+                            <p>As a small business owner, I'm cautiously optimistic. The reduced corporate taxes will help, but I'm more concerned about access to credit. The banking reforms can't come soon enough!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer (same as index.html) -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <img src="image/bignewslogo.png" alt="BigNews Logo" width="180" height="60" loading="lazy">
+                    </div>
+                    <p class="footer-about">BigNews is your trusted source for the latest news, analysis and commentary on politics, business, technology, entertainment and more.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3 class="footer-title">Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="news.html">News</a></li>
+                        <li><a href="politics.html">Politics</a></li>
+                        <li><a href="business.html">Business</a></li>
+                        <li><a href="entertainment.html">Entertainment</a></li>
+                        <li><a href="fashion-trends.html">Fashion & Trends</a></li>
+                        <li><a href="technology-services.html">Technology & Services</a></li>
+                        <li><a href="sports-gaming.html">Sports & Gaming</a></li>
+                        <li><a href="job-adverts.html">Job Offers/Adverts</a></li>
+                        <li><a href="opinions.html">Opinions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3 class="footer-title">Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                        <li><a href="advertise.html">Advertise</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3 class="footer-title">Contact Info</h3>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 News Street, Media City, Country</li>
+                        <li><i class="fas fa-phone"></i> +1 (234) 567-8900</li>
+                        <li><i class="fas fa-envelope"></i> info@bignews.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">&copy; 2025 BigNews. All Rights Reserved.</p>
+                <div class="footer-nav">
+                    <a href="sitemap.html">Sitemap</a>
+                    <a href="accessibility.html">Accessibility</a>
+                    <a href="faq.html">FAQ</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Navigation (same as index.html) -->
+    <div class="mobile-nav">
+        <div class="mobile-nav-header">
+            <div class="mobile-logo">BigNews</div>
+            <button class="mobile-close-btn"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="mobile-nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li class="mobile-dropdown">
+                <a href="news.html">News <i class="fas fa-chevron-down"></i></a>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="news.html#national">National</a></li>
+                    <li><a href="news.html#international">International</a></li>
+                    <li><a href="news.html#health">Health</a></li>
+                    <li><a href="news.html#education">Education</a></li>
+                </ul>
+            </li>
+            <li class="mobile-dropdown">
+                <a href="politics.html">Politics <i class="fas fa-chevron-down"></i></a>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="politics.html#government">Government</a></li>
+                    <li><a href="politics.html#elections">Elections</a></li>
+                    <li><a href="politics.html#policy">Policy</a></li>
+                    <li><a href="politics.html#diplomacy">Diplomacy</a></li>
+                </ul>
+            </li>
+            <li><a href="business.html">Business</a></li>
+            <li><a href="entertainment.html">Entertainment</a></li>
+            <li><a href="fashion-trends.html">Fashion & Trends</a></li>
+            <li><a href="technology-services.html">Technology & Services</a></li>
+            <li><a href="sports-gaming.html">Sports & Gaming</a></li>
+            <li><a href="job-adverts.html">Job Offers/Adverts</a></li>
+            <li><a href="opinions.html">Opinions</a></li>
+        </ul>
+    </div>
+    <div class="mobile-nav-overlay"></div>
+
+    <!-- Mobile Menu Button (same as index.html) -->
+    <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+
+    <!-- Admin Modal -->
+    <div class="admin-modal" id="adminModal">
+        <div class="admin-modal-content">
+            <button class="admin-modal-close" id="adminModalClose">&times;</button>
+            <h2>Edit Article</h2>
+            <form class="admin-form" id="articleEditForm">
+                <div class="admin-form-group">
+                    <label for="editTitle">Article Title</label>
+                    <input type="text" id="editTitle" required>
+                </div>
+                <div class="admin-form-group">
+                    <label for="editAuthor">Author</label>
+                    <input type="text" id="editAuthor" required>
+                </div>
+                <div class="admin-form-group">
+                    <label for="editCategory">Category</label>
+                    <select id="editCategory" required>
+                        <option value="politics">Politics</option>
+                        <option value="business">Business</option>
+                        <option value="technology">Technology</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="sports">Sports</option>
+                        <option value="health">Health</option>
+                    </select>
+                </div>
+                <div class="admin-form-group">
+                    <label for="editDate">Publish Date</label>
+                    <input type="date" id="editDate" required>
+                </div>
+                <div class="admin-form-group">
+                    <label for="editImage">Featured Image URL</label>
+                    <input type="url" id="editImage" required>
+                </div>
+                <div class="admin-form-group">
+                    <label for="editImageCaption">Image Caption</label>
+                    <input type="text" id="editImageCaption" required>
+                </div>
+                <div class="admin-form-group">
+                    <label for="editContent">Article Content</label>
+                    <textarea id="editContent" required></textarea>
+                </div>
+                <div class="admin-form-group">
+                    <label for="editTags">Tags (comma separated)</label>
+                    <input type="text" id="editTags" required>
+                </div>
+                <div class="admin-form-actions">
+                    <button type="button" class="btn btn-login" id="cancelEditBtn">Cancel</button>
+                    <button type="submit" class="btn btn-subscribe">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Reuse the same JavaScript from index.html for common functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Navigation Toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const mobileNavOverlay = document.querySelector('.mobile-nav-overlay');
+            const mobileCloseBtn = document.querySelector('.mobile-close-btn');
+            
+            function toggleMobileMenu() {
+                mobileNav.classList.toggle('active');
+                mobileNavOverlay.classList.toggle('active');
+                document.body.classList.toggle('no-scroll');
+            }
+            
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            mobileCloseBtn.addEventListener('click', toggleMobileMenu);
+            mobileNavOverlay.addEventListener('click', toggleMobileMenu);
+            
+            // Mobile Dropdown Menus
+            const mobileDropdowns = document.querySelectorAll('.mobile-dropdown');
+            
+            mobileDropdowns.forEach(dropdown => {
+                const link = dropdown.querySelector('a');
+                
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                });
+            });
+            
+            // Sticky Header on Scroll
+            const header = document.querySelector('.main-header');
+            let lastScroll = 0;
+            
+            window.addEventListener('scroll', function() {
+                const currentScroll = window.pageYOffset;
+                
+                if (currentScroll <= 0) {
+                    header.classList.remove('scroll-up');
+                    return;
+                }
+                
+                if (currentScroll > lastScroll && !header.classList.contains('scroll-down')) {
+                    header.classList.remove('scroll-up');
+                    header.classList.add('scroll-down');
+                } else if (currentScroll < lastScroll && header.classList.contains('scroll-down')) {
+                    header.classList.remove('scroll-down');
+                    header.classList.add('scroll-up');
+                }
+                
+                lastScroll = currentScroll;
+            });
+            
+            // Smooth Scrolling for Anchor Links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (mobileNav.classList.contains('active')) {
+                            toggleMobileMenu();
+                        }
+                    }
+                });
+            });
+            
+            // Ad Popup Functionality
+            const adPopup = document.querySelector('.ad-popup');
+            const adCloseBtn = document.querySelector('.ad-close-btn');
+            
+            // Show popup after 5 seconds
+            setTimeout(() => {
+                adPopup.classList.add('active');
+                document.body.classList.add('no-scroll');
+            }, 5000);
+            
+            // Close popup
+            adCloseBtn.addEventListener('click', function() {
+                adPopup.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            });
+            
+            // Ad Carousel Functionality
+            const adCarousel = document.querySelector('.ad-carousel-inner');
+            const adItems = document.querySelectorAll('.ad-carousel-item');
+            const prevBtn = document.querySelector('.ad-carousel-prev');
+            const nextBtn = document.querySelector('.ad-carousel-next');
+            let currentAdIndex = 0;
+            const adCount = adItems.length;
+            
+            // Initialize carousel
+            function initAdCarousel() {
+                adItems.forEach((item, index) => {
+                    if (index === 0) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Show next ad
+            function showNextAd() {
+                currentAdIndex = (currentAdIndex + 1) % adCount;
+                updateAdCarousel();
+            }
+            
+            // Show previous ad
+            function showPrevAd() {
+                currentAdIndex = (currentAdIndex - 1 + adCount) % adCount;
+                updateAdCarousel();
+            }
+            
+            // Update carousel display
+            function updateAdCarousel() {
+                const offset = -currentAdIndex * 100;
+                adCarousel.style.transform = `translateX(${offset}%)`;
+                
+                adItems.forEach((item, index) => {
+                    if (index === currentAdIndex) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Set up event listeners
+            nextBtn.addEventListener('click', showNextAd);
+            prevBtn.addEventListener('click', showPrevAd);
+            
+            // Auto-rotate ads every 10 seconds
+            let adInterval = setInterval(showNextAd, 10000);
+            
+            // Pause auto-rotation on hover
+            const adCarouselContainer = document.querySelector('.ad-carousel');
+            adCarouselContainer.addEventListener('mouseenter', () => {
+                clearInterval(adInterval);
+            });
+            
+            adCarouselContainer.addEventListener('mouseleave', () => {
+                adInterval = setInterval(showNextAd, 10000);
+            });
+            
+            // Initialize carousel
+            initAdCarousel();
+            
+            // Comment Form Toggle
+            const loginToCommentBtn = document.getElementById('loginToCommentBtn');
+            const commentForm = document.getElementById('commentForm');
+            
+            loginToCommentBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                // In a real implementation, this would redirect to login
+                // For demo purposes, we'll just show the form
+                commentForm.style.display = 'block';
+                loginToCommentBtn.style.display = 'none';
+            });
+            
+            // Comment Submission
+            const commentSubmissionForm = document.getElementById('commentSubmissionForm');
+            
+            if (commentSubmissionForm) {
+                commentSubmissionForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const name = document.getElementById('commentName').value.trim();
+                    const comment = document.getElementById('commentText').value.trim();
+                    
+                    if (name && comment) {
+                        // In a real implementation, this would send to server
+                        // For demo, we'll just add to the DOM
+                        const commentList = document.querySelector('.comment-list');
+                        const newComment = document.createElement('div');
+                        newComment.className = 'comment';
+                        newComment.innerHTML = `
+                            <div class="comment-header">
+                                <span class="comment-author">${name}</span>
+                                <span class="comment-date">Just now</span>
+                            </div>
+                            <div class="comment-content">
+                                <p>${comment}</p>
+                            </div>
+                        `;
+                        commentList.prepend(newComment);
+                        
+                        // Reset form
+                        commentSubmissionForm.reset();
+                    }
+                });
+            }
+            
+            // Save Article Button
+            const saveArticleBtn = document.getElementById('saveArticleBtn');
+            
+            saveArticleBtn.addEventListener('click', function() {
+                // In a real implementation, this would save to user's account
+                // For demo, we'll just change the button state
+                if (saveArticleBtn.innerHTML.includes('Saved')) {
+                    saveArticleBtn.innerHTML = '<i class="far fa-bookmark"></i> Save for Later';
+                    alert('Article removed from your saved items');
+                } else {
+                    saveArticleBtn.innerHTML = '<i class="fas fa-bookmark"></i> Saved';
+                    alert('Article saved to your account');
+                }
+            });
+            
+            // Admin Controls (simulated - would be based on actual auth in real app)
+            const adminControls = document.getElementById('adminControls');
+            const editArticleBtn = document.getElementById('editArticleBtn');
+            const deleteArticleBtn = document.getElementById('deleteArticleBtn');
+            const publishArticleBtn = document.getElementById('publishArticleBtn');
+            const adminModal = document.getElementById('adminModal');
+            const adminModalClose = document.getElementById('adminModalClose');
+            const cancelEditBtn = document.getElementById('cancelEditBtn');
+            const articleEditForm = document.getElementById('articleEditForm');
+            
+            // For demo purposes, we'll simulate admin login with a URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const isAdmin = urlParams.has('admin');
+            
+            if (isAdmin) {
+                adminControls.style.display = 'block';
+                
+                // Populate edit form with current article data
+                document.getElementById('editTitle').value = document.getElementById('articleTitle').textContent;
+                document.getElementById('editAuthor').value = document.getElementById('articleAuthor').textContent;
+                document.getElementById('editDate').value = '2025-07-10'; // Would parse from articleDate in real app
+                document.getElementById('editImage').value = document.querySelector('.article-hero img').src;
+                document.getElementById('editImageCaption').value = document.querySelector('.article-hero figcaption').textContent;
+                document.getElementById('editContent').value = document.getElementById('articleContent').innerHTML;
+                document.getElementById('editTags').value = Array.from(document.querySelectorAll('.article-tag')).map(tag => tag.textContent.substring(1)).join(', ');
+                
+                // Edit Article Button
+                editArticleBtn.addEventListener('click', function() {
+                    adminModal.classList.add('active');
+                    document.body.classList.add('no-scroll');
+                });
+                
+                // Delete Article Button
+                deleteArticleBtn.addEventListener('click', function() {
+                    if (confirm('Are you sure you want to delete this article? This action cannot be undone.')) {
+                        alert('Article deleted (simulated). In a real app, this would remove the article from the database.');
+                        // Would redirect to homepage or category page in real app
+                    }
+                });
+                
+                // Publish Article Button
+                publishArticleBtn.addEventListener('click', function() {
+                    alert('Changes published (simulated). In a real app, this would update the live article.');
+                });
+                
+                // Close Modal
+                adminModalClose.addEventListener('click', function() {
+                    adminModal.classList.remove('active');
+                    document.body.classList.remove('no-scroll');
+                });
+                
+                cancelEditBtn.addEventListener('click', function() {
+                    adminModal.classList.remove('active');
+                    document.body.classList.remove('no-scroll');
+                });
+                
+                // Form Submission
+                articleEditForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Update article with form data
+                    document.getElementById('articleTitle').textContent = document.getElementById('editTitle').value;
+                    document.getElementById('articleAuthor').textContent = document.getElementById('editAuthor').value;
+                    document.querySelector('.article-hero img').src = document.getElementById('editImage').value;
+                    document.querySelector('.article-hero figcaption').textContent = document.getElementById('editImageCaption').value;
+                    document.getElementById('articleContent').innerHTML = document.getElementById('editContent').value;
+                    
+                    // Update category tag
+                    const categoryTag = document.querySelector('.category-tag');
+                    categoryTag.textContent = document.getElementById('editCategory').options[document.getElementById('editCategory').selectedIndex].text;
+                    
+                    // Update tags
+                    const tagsContainer = document.querySelector('.article-tags');
+                    tagsContainer.innerHTML = '';
+                    const tags = document.getElementById('editTags').value.split(',');
+                    tags.forEach(tag => {
+                        if (tag.trim()) {
+                            const tagElement = document.createElement('a');
+                            tagElement.className = 'article-tag';
+                            tagElement.href = '#';
+                            tagElement.textContent = `#${tag.trim()}`;
+                            tagsContainer.appendChild(tagElement);
+                        }
+                    });
+                    
+                    adminModal.classList.remove('active');
+                    document.body.classList.remove('no-scroll');
+                    alert('Article updated successfully!');
+                });
+            }
+            
+            // Viewport Height Fix for Mobile Devices
+            function setViewportHeight() {
+                let vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+            }
+            
+            setViewportHeight();
+            window.addEventListener('resize', setViewportHeight);
+        });
+    </script>
+</body>
+</html>
